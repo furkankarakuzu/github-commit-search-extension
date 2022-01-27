@@ -1,0 +1,20 @@
+{
+    "name":"Github Commit Search",
+    "version":"1.0",
+    "description":"You can search commits in the repositories on github.",
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action":{
+        "default_popup":"popup.html"
+    },
+    "host_permissions": [
+        "https://github.com/*/*/commits"
+      ],
+    "permissions":[],
+    "content_scripts": [{
+      "js": ["foreground.js"],
+      "matches": ["https://github.com/*/*/commits/*"]
+  }]
+}
