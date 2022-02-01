@@ -12,7 +12,7 @@
     "host_permissions": [
         "https://github.com/*/*/commits"
       ],
-    "permissions":[],
+    "permissions":["tabs","storage"],
     "content_scripts": [{
       "js": ["foreground.js"],
       "matches": ["https://github.com/*/*/commits/*"]

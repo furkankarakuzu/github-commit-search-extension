@@ -38,6 +38,14 @@ input.addEventListener("keyup", (e) => {
         return true;
     });
     filteredCommits.map((item) => {
+      let commitDate = new Date(Date.parse(item.commit.committer.date));
+
+      commitDate = commitDate.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+
       commitsContainer.innerHTML += `<div class="TimelineItem TimelineItem--condensed pt-0 pb-2">
       <div class="TimelineItem-badge">
           <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true"
@@ -48,9 +56,7 @@ input.addEventListener("keyup", (e) => {
           </svg>
       </div>
       <div class="TimelineItem-body">
-          <h2 class="f5 text-normal">Commits on ${
-            item.commit.committer.date.split("T")[0]
-          }</h2>
+          <h2 class="f5 text-normal">Commits on ${commitDate}</h2>
           <ol class="mt-3 list-style-none Box Box--condensed ml-n6 ml-sm-0 position-relative">
               <li class="Box-row Box-row--focus-gray mt-0 d-flex js-commits-list-item js-navigation-item js-details-container Details js-socket-channel js-updatable-content">
 
@@ -77,7 +83,9 @@ input.addEventListener("keyup", (e) => {
                                       style="width:20px;height:20px;" href="/${
                                         item.author.login
                                       }">
-                                      <img height="20" width="20" alt="@furkankarakuzu"
+                                      <img height="20" width="20" alt="@${
+                                        item.author.login
+                                      }"
                                           src=${item.author.avatar_url}
                                           class=" avatar-user">
                                   </a>
@@ -96,10 +104,12 @@ input.addEventListener("keyup", (e) => {
 
 
                               committed
-                              <relative-time datetime="2021-10-01T22:22:00Z" class="no-wrap"
-                                  title="${item.commit.committer.date}">on ${
-        item.commit.committer.date.split("T")[0]
-      }</relative-time>
+                              <relative-time datetime="${
+                                item.commit.committer.date
+                              }" class="no-wrap"
+                                  title="${
+                                    item.commit.committer.date
+                                  }">on ${commitDate}</relative-time>
 
                           </div>
                           <div class="ml-1">
