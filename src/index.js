@@ -1,3 +1,5 @@
+import { Octokit } from "octokit";
+const octockit = new Octokit();
 const input = document.createElement("input");
 input.setAttribute("type", "text");
 input.setAttribute("placeholder", "Search..");
@@ -12,31 +14,44 @@ const container = document.getElementById("repo-content-pjax-container");
 container.insertBefore(input, container.firstChild);
 let repo = window.location.href.split("github.com/")[1];
 repo = repo.split("/");
-const username = repo[0];
+const owner = repo[0];
 const repoName = repo[1];
 const branchName = repo[3];
 let allCommits = [];
-fetch(
-  `https://api.github.com/repos/${username}/${repoName}/commits?sha=${branchName}&per_page=100`
-).then((res) => {
-  res.json().then((response) => {
-    allCommits = response;
-  });
-});
+// fetch(
+//   `https://api.github.com/repos/${username}/${repoName}/commits?sha=${branchName}&per_page=100`
+// ).then((res) => {
+//   res.json().then((response) => {
+//     allCommits = response;
+//   });
+// });
 
 let commitsContainer = document.querySelector("div.js-navigation-container ");
 const noSearchItems = commitsContainer.innerHTML;
-input.addEventListener("keyup", (e) => {
+input.addEventListener("keyup", async (e) => {
   if (e.target.value != "") {
     commitsContainer.innerHTML = "";
-    const filteredCommits = allCommits.filter((commit) => {
-      if (
-        commit.commit.message
-          .toUpperCase()
-          .includes(e.target.value.toUpperCase())
-      )
-        return true;
-    });
+    let query = e.target.value;
+    let filteredCommits = [];
+    // await octockit.rest.search
+    //   .commits({
+    //     owner,
+    //     repo: repoName,
+    //     q,
+    //   })
+    //   .then((res) => (filteredCommits = res.data.items));
+    // await octockit.request({
+    //   owner,
+    //   repo: repoName,
+    //   url: `/repos/${owner}/${repoName}/commits`,
+    //   method: "GET",
+    //   q,
+    // });
+    await octockit
+      .request("GET /search/commits", {
+        q: `repo:${owner}/${repoName}${decodeURIComponent("+")}${query}`,
+      })
+      .then((res) => (filteredCommits = res.data.items));
     filteredCommits.map((item) => {
       let commitDate = new Date(Date.parse(item.commit.committer.date));
 

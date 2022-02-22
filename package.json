@@ -1,0 +1,29 @@
+{
+  "name": "github-commit-search-extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furkankarakuzu/github-commit-search-extension.git"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/furkankarakuzu/github-commit-search-extension/issues"
+  },
+  "homepage": "https://github.com/furkankarakuzu/github-commit-search-extension#readme",
+  "dependencies": {
+    "octokit": "^1.7.1"
+  }
+}
