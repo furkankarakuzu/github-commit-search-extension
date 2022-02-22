@@ -17,7 +17,7 @@ repo = repo.split("/");
 const owner = repo[0];
 const repoName = repo[1];
 const branchName = repo[3];
-let allCommits = [];
+// let allCommits = [];
 // fetch(
 //   `https://api.github.com/repos/${username}/${repoName}/commits?sha=${branchName}&per_page=100`
 // ).then((res) => {
@@ -49,7 +49,7 @@ input.addEventListener("keyup", async (e) => {
     // });
     await octockit
       .request("GET /search/commits", {
-        q: `repo:${owner}/${repoName}${decodeURIComponent("+")}${query}`,
+        q: `${query} repo:${owner}/${repoName}`,
       })
       .then((res) => (filteredCommits = res.data.items));
     filteredCommits.map((item) => {
